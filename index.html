@@ -181,6 +181,37 @@
     box-shadow:0 3px 10px rgba(58,52,44,0.10)}
   .gallery-cap{margin-top:6px;text-align:center;font-size:11.5px;color:var(--muted);line-height:1.2}
 
+  /* ---------- Tappable item triggers ---------- */
+  .mtrigger{background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:left;
+    display:inline-flex;align-items:center;gap:6px}
+  .mname.mtrigger{display:flex}
+  .mtrig-ic{width:14px;height:14px;flex:0 0 auto;color:var(--teal-ink);opacity:.8}
+  .mtrigger:hover .mtrig-tx{text-decoration:underline;text-decoration-color:rgba(18,107,127,.45);
+    text-underline-offset:3px}
+  .mtrigger:hover .mtrig-ic{opacity:1;color:var(--teal)}
+  .tap-hint{display:flex;align-items:center;justify-content:center;gap:6px;margin:12px 16px 2px;
+    font-size:12px;color:var(--muted)}
+  .tap-hint svg{width:14px;height:14px;flex:0 0 auto;color:var(--teal-ink)}
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
+  .lightbox[hidden]{display:none}
+  .lb-backdrop{position:absolute;inset:0;background:rgba(20,17,14,.72)}
+  .lb-panel{position:relative;z-index:1;width:100%;max-width:400px;max-height:90vh;overflow:auto;
+    background:var(--card);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.45);animation:lbin .2s ease}
+  @keyframes lbin{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.lb-panel{animation:none}}
+  .lb-close{position:absolute;top:10px;right:10px;z-index:2;width:36px;height:36px;border:0;border-radius:50%;
+    background:rgba(0,0,0,.5);color:#fff;font-size:16px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center}
+  .lb-close:hover{background:rgba(0,0,0,.7)}
+  .lb-media{background:#e7d9c5;border-radius:18px 18px 0 0;overflow:hidden}
+  .lb-media img{width:100%;height:auto;max-height:60vh;object-fit:contain;display:block}
+  .lb-info{padding:15px 18px 20px}
+  .lb-name{font-family:var(--slab);font-weight:700;font-size:22px;color:var(--ink);line-height:1.1}
+  .lb-desc{margin-top:6px;font-size:13.5px;color:var(--muted);line-height:1.45}
+  .lb-price{margin-top:10px;font-family:var(--slab);font-weight:700;font-size:20px;color:var(--teal-ink)}
+
   /* ---------- Screen transition ---------- */
   .screen{animation:fade .28s ease both}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -198,6 +229,20 @@
 </div>
 <!-- Short, polite route-change announcement for screen readers (not the whole screen). -->
 <div id="route-status" class="sr-only" aria-live="polite"></div>
+
+<!-- Photo lightbox (opened when a product name is tapped) -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-name" hidden>
+  <div class="lb-backdrop" data-close></div>
+  <div class="lb-panel">
+    <button type="button" class="lb-close" data-close aria-label="Cerrar">✕</button>
+    <div class="lb-media"><img id="lb-img" src="" alt=""></div>
+    <div class="lb-info">
+      <div class="lb-name" id="lb-name"></div>
+      <div class="lb-desc" id="lb-desc"></div>
+      <div class="lb-price" id="lb-price"></div>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ============================================================
@@ -331,6 +376,31 @@ function renderBar(screen){
   `;
 }
 
+/* ---------- tappable item photos: item -> source photo id (see assets/img/p-<id>.*) ---------- */
+const PHOTO = {
+  calientes:{ 'Espresso':'12','Cortado':'7','Flat White':'6','Americano':'13','Latte':'8','Cappuccino':'3',
+    'Chai':'16','Dirty Chai':'30','Matcha':'11','Chocolate':'44','Choco-Espresso':'46',"Té's":'125' },
+  frias:{ 'Americano':'90','Latte':'86','Chai':'109','Dirty Chai':'87','Matcha':'10','Té helado':'106',
+    'Limonada':'81','Frappé Chai':'75','Frappé':'147','Frappé Matcha':'154','Bebidas adicionales':'101' },
+  sandwiches:{ 'Pan-Wich':'169','Verde Vital':'66','Avocado Toast':'161','Refrescante':'137','Pollo':'95' },
+  postres:{ 'Brownie Hershey':'52','Brownie Hershey|con nieve':'117','Rol de Canela':'20','Muffin Chocolate':'35' },
+};
+function photoOf(section, name, sub){
+  const m = PHOTO[section]; if(!m) return '';
+  return (sub && m[name + '|' + sub]) || m[name] || '';
+}
+
+const CAM = '<svg class="mtrig-ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="8.5" cy="10.5" r="1.5"></circle><path d="M21 15l-5-5L4.5 20.5"></path></svg>';
+
+// Render an item name as a photo trigger button (or a plain span when no photo is mapped).
+function trig(o){
+  if(!o.photo) return `<span class="${o.cls}">${esc(o.name)}</span>`;
+  const d = o.desc ? ` data-desc="${esc(o.desc)}"` : '';
+  const p = o.price ? ` data-price="${esc(o.price)}"` : '';
+  return `<button type="button" class="${o.cls} mtrigger" data-photo="${esc(o.photo)}" data-name="${esc(o.name)}"${d}${p} aria-label="Ver foto de ${esc(o.name)}"><span class="mtrig-tx">${esc(o.name)}</span>${CAM}</button>`;
+}
+const TAP_HINT = `<p class="tap-hint">${CAM}<span>Toca un producto para ver su foto</span></p>`;
+
 /* ---------- sample-photo gallery (a few example photos per section) ---------- */
 const GALLERY = {
   calientes: [
@@ -448,16 +518,18 @@ function drinksHTML(key, cfg){
     </tr></thead>`;
 
   const rows = d.items.map(it => {
+    const photo = photoOf(key, it.name);
+    const nameCell = trig({ name:it.name, photo, desc:it.desc, cls:'mname' });
     const simple = it.rows.length === 1 && !it.rows[0].note;
     if(simple){
       return `<tr class="mrow">
-        <th scope="row" class="td-item"><span class="mname">${esc(it.name)}</span>${
+        <th scope="row" class="td-item">${nameCell}${
           it.desc ? `<span class="mdesc">${esc(it.desc)}</span>` : ''}</th>
         ${priceCells(it.rows[0].chips, cols)}
       </tr>`;
     }
     const head = `<tr class="mgroup"><th scope="row" class="td-item" colspan="${cols.length + 1}">
-        <span class="mname">${esc(it.name)}</span>${
+        ${nameCell}${
           it.desc ? `<span class="mdesc">${esc(it.desc)}</span>` : ''}</th></tr>`;
     const subs = it.rows.map(r => `<tr class="msub">
         <th scope="row" class="td-sub">${esc(r.note)}</th>
@@ -474,6 +546,7 @@ function drinksHTML(key, cfg){
   return `<div class="screen">
     <h1 class="sr-only">${esc(cfg.title)}</h1>
     ${heroHTML(cfg)}
+    ${TAP_HINT}
     <div class="mcard">
       <table class="mtable">
         <caption class="sr-only">Precios de ${esc(cfg.title)} por tamaño</caption>
@@ -502,7 +575,7 @@ function sandHTML(cfg){
   const cards = MENU.sandwiches.map(s => `
     <div class="sand-card">
       <div class="sand-head">
-        <div class="sand-name">${esc(s.name)}</div>
+        ${trig({ name:s.name, photo:photoOf('sandwiches', s.name), desc:s.desc, price:s.price, cls:'sand-name' })}
         <div class="sand-price">${esc(s.price)}</div>
       </div>
       <div class="sand-desc">${esc(s.desc)}</div>
@@ -512,6 +585,7 @@ function sandHTML(cfg){
   return `<div class="screen">
     <h1 class="sr-only">${esc(cfg.title)}</h1>
     ${heroHTML(cfg)}
+    ${TAP_HINT}
     <div class="sand-list">${cards}</div>
     ${galleryHTML('sandwiches')}
     <div class="pad">
@@ -526,7 +600,8 @@ function sandHTML(cfg){
 function postHTML(cfg){
   const rows = MENU.postres.map(p => `
     <div class="post-row">
-      <div><span class="post-name">${esc(p.name)}</span>${p.sub ? `<span class="post-sub">${esc(p.sub)}</span>` : ''}</div>
+      <div>${trig({ name:p.name, photo:photoOf('postres', p.name, p.sub), desc:p.sub, price:p.price, cls:'post-name' })}${
+        p.sub ? `<span class="post-sub">${esc(p.sub)}</span>` : ''}</div>
       <div class="post-price">${esc(p.price)}</div>
     </div>`).join('');
   const otros = MENU.otros.map(o => `
@@ -534,6 +609,7 @@ function postHTML(cfg){
   return `<div class="screen">
     <h1 class="sr-only">${esc(cfg.title)}</h1>
     ${heroHTML(cfg)}
+    ${TAP_HINT}
     <div class="post-list">${rows}</div>
     ${galleryHTML('postres')}
     <div class="pad">
@@ -591,17 +667,47 @@ function render(fromNav){
   }
 }
 
-// In-app back control: reverse history when we have an in-app entry to return to,
-// otherwise go home. href="#home" keeps it working with JS disabled.
+/* ---------- lightbox ---------- */
+const lb = document.getElementById('lightbox');
+let lbReturnFocus = null;
+function openLightbox(t){
+  const d = t.dataset;
+  const img = document.getElementById('lb-img');
+  img.onerror = () => { img.onerror = null; img.src = `assets/img/p-${d.photo}.jpg`; };
+  img.src = `assets/img/p-${d.photo}.webp`;
+  img.alt = d.name || '';
+  document.getElementById('lb-name').textContent = d.name || '';
+  const desc = document.getElementById('lb-desc'); desc.textContent = d.desc || ''; desc.hidden = !d.desc;
+  const price = document.getElementById('lb-price'); price.textContent = d.price || ''; price.hidden = !d.price;
+  lbReturnFocus = t;
+  lb.hidden = false;
+  document.documentElement.style.overflow = 'hidden';
+  lb.querySelector('.lb-close').focus();
+}
+function closeLightbox(){
+  if(lb.hidden) return;
+  lb.hidden = true;
+  document.documentElement.style.overflow = '';
+  if(lbReturnFocus){ try { lbReturnFocus.focus(); } catch (e) {} lbReturnFocus = null; }
+}
+
+/* ---------- delegated interactions ---------- */
 document.addEventListener('click', (e) => {
-  const back = e.target.closest ? e.target.closest('.back') : null;
-  if(!back) return;
-  e.preventDefault();
-  if(navigatedInApp && history.length > 1) history.back();
-  else location.hash = '';
+  const el = e.target;
+  if(!el.closest) return;
+  const back = el.closest('.back');
+  if(back){ e.preventDefault(); if(navigatedInApp && history.length > 1) history.back(); else location.hash = ''; return; }
+  const t = el.closest('.mtrigger');
+  if(t){ e.preventDefault(); openLightbox(t); return; }
+  if(el.closest('[data-close]')){ closeLightbox(); }
+});
+document.addEventListener('keydown', (e) => {
+  if(lb.hidden) return;
+  if(e.key === 'Escape') closeLightbox();
+  else if(e.key === 'Tab'){ e.preventDefault(); lb.querySelector('.lb-close').focus(); }  // simple focus trap
 });
 
-window.addEventListener('hashchange', () => { navigatedInApp = true; render(true); });
+window.addEventListener('hashchange', () => { navigatedInApp = true; closeLightbox(); render(true); });
 render(false);
 </script>
 </body>
