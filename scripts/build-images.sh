@@ -42,4 +42,13 @@ for name in calientes frias sandwiches postres; do
   eval "mkcard $name \$CARD_$name"
 done
 
+# Brand logo (transparent PNG source) -> web WebP (alpha) + quantized PNG fallback,
+# plus a 180x180 apple-touch-icon on a cream background.
+if [ -f "$SRC/logo.png" ]; then
+  magick "$SRC/logo.png" -trim +repage -resize 520x -strip -define webp:method=6 -quality 88 "$OUT/logo.webp"
+  magick "$SRC/logo.png" -trim +repage -resize 520x -strip -colors 64 -define png:compression-level=9 "$OUT/logo.png"
+  magick "$SRC/logo.png" -trim +repage -resize 148x148 -background "#f3efe9" -gravity center -extent 180x180 -strip "$OUT/apple-touch-icon.png"
+  echo "logo.webp / logo.png / apple-touch-icon.png  (from logo.png)"
+fi
+
 echo "Done. Wrote $(ls "$OUT" | wc -l) files to assets/img/"
