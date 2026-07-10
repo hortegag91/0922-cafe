@@ -55,7 +55,7 @@ done
 echo "gallery: 12 square thumbs (gal-*.jpg/.webp)"
 
 # Per-item lightbox photos (tap a product to view). One p-<id>.{jpg,webp} per matched item.
-detail_ids=(12 7 6 13 8 3 16 30 11 44 46 125 90 86 109 87 10 106 81 75 147 154 101 169 66 161 137 95 52 117 20 35)
+detail_ids=(12 6 13 8 3 16 30 11 44 46 125 90 86 109 87 10 106 81 75 147 154 101 169 66 161 137 95 52 117 20 35)
 for id in "${detail_ids[@]}"; do
   magick "$SRC/0922-$id.jpg" -auto-orient -resize 820x820\> -unsharp 0x0.6 -quality 82 "$OUT/p-$id.jpg"
   magick "$OUT/p-$id.jpg" -quality 80 -define webp:method=6 "$OUT/p-$id.webp"

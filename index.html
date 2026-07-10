@@ -271,7 +271,6 @@ const MENU = {
         { note:'Espresso sencillo', chips:[C('Chico','$37')] },
         { note:'Espresso doble', chips:[C('Chico','$45')] },
       ]},
-      { name:'Cortado', desc:'1 oz. café + 1 oz. leche caliente', rows:[{ note:'', chips:[C('Chico','$42')] }] },
       { name:'Flat White', desc:'2 oz. espresso + 4 oz. leche con espuma', rows:[{ note:'', chips:[C('Chico','$53')] }] },
       { name:'Americano', desc:'', rows:[
         { note:'Americano Espresso', chips:[C('Chico','$33'),C('Mediano','$36'),C('Grande','$42')] },
@@ -300,7 +299,7 @@ const MENU = {
       { name:'Chai', desc:'Especias, manzana + hielo', rows:[{ note:'', chips:[C('Mediano','$60'),C('Grande','$70')] }] },
       { name:'Dirty Chai', desc:'Café + Especias + leche + hielo', rows:[{ note:'', chips:[C('Mediano','$77'),C('Grande','$89')] }] },
       { name:'Matcha', desc:'Mango, frutos rojos + hielo', rows:[{ note:'', chips:[C('Mediano','$95'),C('Grande','$125')] }] },
-      { name:'Té helado', desc:'Mango, frutos rojos + hielo', rows:[{ note:'', chips:[C('Mediano','$45'),C('Grande','$55')] }] },
+      { name:'Té helado', desc:'Detox · Negro · Verde', rows:[{ note:'', chips:[C('Mediano','$45'),C('Grande','$55')] }] },
       { name:'Limonada', desc:'Lavanda, frutos rojos y menta', rows:[{ note:'', chips:[C('Mediano','$50'),C('Grande','$60')] }] },
       { name:'Frappé Chai', desc:'Base + chai + jarabe + leche + hielo', rows:[{ note:'', chips:[C('Mediano','$85'),C('Grande','$95')] }] },
       { name:'Frappé', desc:'Base + jarabe + leche + hielo', rows:[{ note:'', chips:[C('Mediano','$65'),C('Grande','$75')] }] },
@@ -378,7 +377,7 @@ function renderBar(screen){
 
 /* ---------- tappable item photos: item -> source photo id (see assets/img/p-<id>.*) ---------- */
 const PHOTO = {
-  calientes:{ 'Espresso':'12','Cortado':'7','Flat White':'6','Americano':'13','Latte':'8','Cappuccino':'3',
+  calientes:{ 'Espresso':'12','Flat White':'6','Americano':'13','Latte':'8','Cappuccino':'3',
     'Chai':'16','Dirty Chai':'30','Matcha':'11','Chocolate':'44','Choco-Espresso':'46',"Té's":'125' },
   frias:{ 'Americano':'90','Latte':'86','Chai':'109','Dirty Chai':'87','Matcha':'10','Té helado':'106',
     'Limonada':'81','Frappé Chai':'75','Frappé':'147','Frappé Matcha':'154','Bebidas adicionales':'101' },
