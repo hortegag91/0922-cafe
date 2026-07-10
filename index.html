@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Menú · 09:22 Café</title>
+<meta name="description" content="Menú de 09:22 Café — bebidas calientes y frías, sandwiches, postres y más. Precios en pesos.">
+<meta name="theme-color" content="#45362b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="09:22 Café">
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Menú · 09:22 Café">
+<meta property="og:description" content="Bebidas calientes y frías, sandwiches, postres y más.">
+<!-- og:image/og:url are made absolute at runtime (see script) so social previews work under any GitHub Pages path.
+     For crawlers that don't run JS, hard-code your published URL here, e.g.
+     content="https://<user>.github.io/<repo>/assets/img/hero-calientes.jpg" -->
+<meta property="og:url" content="">
+<meta property="og:image" content="assets/img/hero-calientes.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Favicon: coffee cup -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%2345362b'/%3E%3Cpath%20d='M16%2024h26v14a11%2011%200%2001-11%2011h-4a11%2011%200%2001-11-11z'%20fill='%23178ba3'/%3E%3Cpath%20d='M42%2027h4a6%206%200%20010%2012h-4'%20fill='none'%20stroke='%23178ba3'%20stroke-width='3.4'/%3E%3Cpath%20d='M23%2011c-2%203%202%205%200%208M31%2011c-2%203%202%205%200%208'%20fill='none'%20stroke='%233fbcd6'%20stroke-width='2.6'%20stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Zilla+Slab:ital,wght@0,500;0,600;0,700;1,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#e7eae9; --ink:#1e1d1b; --brown:#45362b; --teal:#178ba3;
+    --teal-bright:#3fbcd6; --teal-link:#14798f; --cream:#f3efe9; --card:#fbfaf8;
+    /* --teal-ink: darker teal for small text on light bg (AA ≥4.5:1).
+       --teal-block: darker teal for coloured block backgrounds (white text AA). */
+    --teal-ink:#126b7f; --teal-block:#0f6f83;
+    --gold:#e9c9a0; --chip:#bcd2d9; --muted:#67635d; --muted2:#6b6862;
+    --pac:'Pacifico',cursive; --slab:'Zilla Slab',Georgia,serif;
+    --sans:'Work Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--sans); color:var(--ink); background-color:var(--bg);
+    background-image:
+      url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='180'%20height='180'%20viewBox='0%200%20180%20180'%3E%3Cg%20transform='translate(36,42)%20rotate(-22)'%3E%3Cellipse%20rx='11'%20ry='17'%20fill='%234a3627'%20fill-opacity='0.055'/%3E%3Cpath%20d='M0,-14%20C-5,-4%205,6%200,14'%20stroke='%237a5c44'%20stroke-opacity='0.05'%20stroke-width='1.6'%20fill='none'/%3E%3C/g%3E%3Cg%20transform='translate(130,96)%20rotate(30)'%3E%3Cellipse%20rx='11'%20ry='17'%20fill='%234a3627'%20fill-opacity='0.055'/%3E%3Cpath%20d='M0,-14%20C-5,-4%205,6%200,14'%20stroke='%237a5c44'%20stroke-opacity='0.05'%20stroke-width='1.6'%20fill='none'/%3E%3C/g%3E%3Cg%20transform='translate(74,146)%20rotate(8)'%3E%3Cellipse%20rx='11'%20ry='17'%20fill='%234a3627'%20fill-opacity='0.055'/%3E%3Cpath%20d='M0,-14%20C-5,-4%205,6%200,14'%20stroke='%237a5c44'%20stroke-opacity='0.05'%20stroke-width='1.6'%20fill='none'/%3E%3C/g%3E%3C/svg%3E"),
+      radial-gradient(circle, rgba(96,130,140,0.12) 1px, transparent 1.6px),
+      radial-gradient(130% 80% at 50% -8%, rgba(63,188,214,0.13), transparent 60%),
+      radial-gradient(120% 70% at 100% 100%, rgba(74,54,39,0.12), transparent 55%);
+    background-size:180px 180px, 20px 20px, cover, cover;
+    background-repeat:repeat, repeat, no-repeat, no-repeat;
+    background-attachment:fixed, fixed, fixed, fixed;
+    min-height:100vh;
+  }
+  a{color:var(--teal-link);text-decoration:none}
+  img{display:block;max-width:100%}
+  button{font-family:inherit}
+  :focus-visible{outline:3px solid var(--teal-bright);outline-offset:2px;border-radius:6px}
+  .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+  .app{min-height:100vh;max-width:460px;margin:0 auto;padding:0 0 64px;position:relative;
+       background:linear-gradient(rgba(255,255,255,0.28),rgba(255,255,255,0.28));
+       box-shadow:0 0 40px rgba(58,52,44,0.06)}
+
+  /* ---------- App bar ---------- */
+  .appbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;
+    height:56px;padding:0 16px;padding-top:env(safe-area-inset-top);
+    box-sizing:content-box;background:var(--brown);color:var(--cream);
+    box-shadow:0 2px 10px rgba(0,0,0,0.18)}
+  .appbar .inner{display:flex;align-items:center;gap:12px;width:100%;height:56px}
+  .back{display:flex;align-items:center;justify-content:center;width:36px;height:36px;
+    border:none;border-radius:50%;background:rgba(255,255,255,0.12);color:var(--cream);
+    font-size:22px;line-height:1;cursor:pointer;flex:0 0 auto;text-decoration:none;
+    transition:background .15s}
+  .back:hover{background:rgba(255,255,255,0.22)}
+  .brand-time{font-family:var(--pac);font-size:22px;line-height:1;color:var(--teal-bright)}
+  .brand-name{font-family:var(--slab);font-weight:600;letter-spacing:2px;font-size:14px;
+    text-transform:uppercase;color:var(--cream)}
+  .appbar .spacer{flex:1}
+  .appbar .title{font-family:var(--slab);font-weight:700;font-size:15px;color:var(--gold);
+    letter-spacing:.5px;text-align:right}
+
+  /* ---------- Home ---------- */
+  /* z-index:0 gives .home-head its own stacking context so the z-index:-1 beans/ring
+     paint above the .app panel background but below the "menu" wordmark. */
+  .home-head{position:relative;z-index:0;padding:40px 20px 8px;text-align:center}
+  .home-ring{position:absolute;left:50%;top:46px;transform:translateX(-50%);width:172px;
+    height:172px;border:13px solid rgba(74,54,39,0.07);border-radius:50%;z-index:-1;pointer-events:none}
+  .bean{position:absolute;display:block;pointer-events:none;z-index:-1}
+  .bean svg{display:block;width:100%;height:100%}
+  .home-word{font-family:var(--pac);font-size:74px;line-height:.9;color:var(--teal)}
+  .home-sub{margin-top:6px;font-family:var(--slab);font-weight:700;letter-spacing:5px;
+    font-size:15px;text-transform:uppercase;color:var(--brown)}
+  .home-rule{width:56px;height:4px;margin:16px auto 0;background:var(--teal);border-radius:2px}
+  .home-lede{margin:14px auto 0;max-width:300px;color:var(--muted2);font-size:14px;line-height:1.5}
+
+  .cat-list{display:flex;flex-direction:column;gap:16px;padding:22px 16px 0}
+  .cat-card{display:flex;align-items:stretch;padding:0;border:none;border-radius:18px;
+    overflow:hidden;background:var(--card);box-shadow:0 6px 18px rgba(58,52,44,0.10);
+    cursor:pointer;text-align:left;width:100%;color:inherit;
+    transition:transform .16s,box-shadow .16s}
+  .cat-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(58,52,44,0.16)}
+  .cat-card:active{transform:translateY(0)}
+  .cat-thumb{position:relative;width:120px;flex:0 0 120px;min-height:104px;background:#dfe6e6}
+  .cat-thumb img{width:120px;height:100%;object-fit:cover}
+  .cat-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:14px 16px}
+  .cat-name{font-family:var(--slab);font-weight:700;font-size:21px;color:var(--ink);line-height:1.05}
+  .cat-sub{margin-top:4px;font-size:12.5px;color:var(--muted)}
+  .cat-cta{margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-family:var(--slab);
+    font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--teal-ink)}
+  .pricenote{margin:34px 16px 0;text-align:center;color:var(--muted);font-size:12px;letter-spacing:1px}
+
+  /* ---------- Hero (drinks / food) ---------- */
+  .hero{position:relative;height:170px;background:#dfe6e6;overflow:hidden}
+  .hero img{width:100%;height:170px;object-fit:cover}
+  .hero-cap{position:absolute;left:0;right:0;bottom:0;padding:26px 18px 14px;
+    background:linear-gradient(to top,rgba(30,29,27,0.72),rgba(30,29,27,0));pointer-events:none}
+  .hero-kicker{font-family:var(--slab);font-weight:700;font-size:11px;letter-spacing:3px;
+    text-transform:uppercase;color:var(--gold)}
+  .hero-word{font-family:var(--pac);font-size:38px;line-height:.95;color:#fff}
+
+  /* ---------- Drinks ---------- */
+  .sizes{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px 4px;font-family:var(--slab);
+    font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--brown)}
+  .sizes .size{color:var(--teal-ink)}
+  .items{display:flex;flex-direction:column;gap:2px;padding:6px 12px 0}
+  .item{padding:13px 8px;border-bottom:1px solid rgba(69,54,43,0.12)}
+  .item-name{font-family:var(--slab);font-weight:700;font-size:19px;line-height:1.1;color:var(--ink)}
+  .item-desc{margin-top:2px;font-size:12.5px;color:var(--muted);line-height:1.35}
+  .rows{display:flex;flex-direction:column;gap:6px;margin-top:9px}
+  .row-note{font-size:12px;font-weight:500;color:var(--brown);margin-bottom:4px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{display:flex;flex-direction:column;align-items:center;min-width:64px;padding:6px 12px;
+    background:var(--chip);border-radius:9px}
+  .chip-size{font-size:9.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:#3a5560}
+  .chip-price{font-family:var(--slab);font-weight:700;font-size:16px;color:var(--ink)}
+
+  /* ---------- Shared coloured blocks ---------- */
+  .blocks{display:flex;flex-direction:column;gap:14px;padding:20px 16px 0}
+  .pad{padding:20px 16px 0}
+  .block{border-radius:16px;padding:16px 18px}
+  .block h2{margin:0 0 10px;font-family:var(--slab);font-weight:700;font-size:20px;color:#fff}
+  .block-teal{background:var(--teal-block);color:#eafafd}
+  .block-brown{background:var(--brown);color:#e8ddd0}
+  .kv{display:flex;flex-direction:column;gap:6px}
+  .kv .line{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+  .kv .price{font-family:var(--slab);font-weight:700;color:#fff;white-space:nowrap}
+  .kv .price.gold{color:var(--gold)}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .tag{font-size:12.5px;padding:5px 10px;background:rgba(255,255,255,0.10);border-radius:20px}
+  .subhead{margin-top:14px;font-family:var(--slab);font-weight:700;font-size:14px;color:var(--gold)}
+  .tag.sf{background:rgba(233,201,160,0.16)}
+  .block-brown h2.tight{margin-bottom:4px}
+
+  /* ---------- Sandwiches ---------- */
+  .sand-list{display:flex;flex-direction:column;gap:12px;padding:16px 16px 0}
+  .sand-card{background:var(--card);border-radius:16px;padding:15px 16px;box-shadow:0 4px 14px rgba(58,52,44,0.08)}
+  .sand-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .sand-name{font-family:var(--slab);font-weight:700;font-size:19px;color:var(--ink);line-height:1.1}
+  .sand-price{font-family:var(--slab);font-weight:700;font-size:19px;color:var(--teal-ink);white-space:nowrap}
+  .sand-desc{margin-top:5px;font-size:13px;color:var(--muted);line-height:1.4}
+
+  /* ---------- Postres ---------- */
+  .post-list{display:flex;flex-direction:column;gap:2px;padding:12px 16px 0}
+  .post-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:14px 6px;border-bottom:1px solid rgba(69,54,43,0.12)}
+  .post-name{font-family:var(--slab);font-weight:700;font-size:18px;color:var(--ink)}
+  .post-sub{font-size:12.5px;font-style:italic;color:var(--muted);margin-left:6px}
+  .post-price{font-family:var(--slab);font-weight:700;font-size:18px;color:var(--teal-ink);white-space:nowrap}
+
+  /* ---------- Screen transition ---------- */
+  .screen{animation:fade .28s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.screen{animation:none}}
+
+  .foot{margin:30px 16px 0;text-align:center;color:var(--muted);font-size:11.5px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="appbar">
+    <div class="inner" id="appbar-inner"><!-- filled by JS --></div>
+  </header>
+  <main id="screen"><!-- filled by JS --></main>
+</div>
+<!-- Short, polite route-change announcement for screen readers (not the whole screen). -->
+<div id="route-status" class="sr-only" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   09:22 Café — menu data (source of truth: Menu 09-22 Cafe.dc)
+   ============================================================ */
+const C = (size, price) => ({ size, price });
+
+const MENU = {
+  extras: [
+    { name:'Shot Espresso', price:'$14' },
+    { name:'Shot Matcha', price:'$18' },
+    { name:'Shot Limón', price:'$10' },
+    { name:'Jarabe', price:'$14' },
+    { name:'Leche de Soya', price:'$10' },
+    { name:'Leche Almendra', price:'$14' },
+    { name:'Leche de Coco', price:'$14' },
+  ],
+  personaliza: ['Moka','Salted Caramel','Rol de Canela','Bombón tostado','Caramelo','Crema Irlandesa','Vainilla','Moka blanco'],
+  sugarFree: ['Crema Irlandesa','Caramelo'],
+
+  calientes: {
+    heroWord:'Calientes',
+    sizes:['Chico 12oz','Mediano 16oz','Grande 20oz'],
+    items:[
+      { name:'Espresso', desc:'', rows:[
+        { note:'Espresso sencillo', chips:[C('Chico','$37')] },
+        { note:'Espresso doble', chips:[C('Chico','$45')] },
+      ]},
+      { name:'Cortado', desc:'1 oz. café + 1 oz. leche caliente', rows:[{ note:'', chips:[C('Chico','$42')] }] },
+      { name:'Flat White', desc:'2 oz. espresso + 4 oz. leche con espuma', rows:[{ note:'', chips:[C('Chico','$53')] }] },
+      { name:'Americano', desc:'', rows:[
+        { note:'Americano Espresso', chips:[C('Chico','$33'),C('Mediano','$36'),C('Grande','$42')] },
+        { note:'Americano del día', chips:[C('Chico','$26'),C('Mediano','$30'),C('Grande','$35')] },
+      ]},
+      { name:'Latte', desc:'Café + leche + jarabe', rows:[{ note:'', chips:[C('Mediano','$65'),C('Grande','$75')] }] },
+      { name:'Cappuccino', desc:'Café + leche espumosa + jarabe', rows:[{ note:'', chips:[C('Mediano','$58'),C('Grande','$65')] }] },
+      { name:'Chai', desc:'Especias + leche', rows:[{ note:'', chips:[C('Mediano','$60'),C('Grande','$70')] }] },
+      { name:'Dirty Chai', desc:'Café + Especias + leche', rows:[{ note:'', chips:[C('Mediano','$77'),C('Grande','$89')] }] },
+      { name:'Matcha', desc:'Matcha + leche', rows:[{ note:'', chips:[C('Mediano','$90'),C('Grande','$120')] }] },
+      { name:'Chocolate', desc:'Chocolate + leche', rows:[{ note:'', chips:[C('Chico','$38'),C('Mediano','$49'),C('Grande','$60')] }] },
+      { name:'Choco-Espresso', desc:'Chocolate + espresso + leche', rows:[{ note:'', chips:[C('Chico','$50'),C('Mediano','$63'),C('Grande','$80')] }] },
+      { name:"Té's", desc:'Té Negro · Té Detox · Té Verde', rows:[{ note:'', chips:[C('Chico','$30'),C('Mediano','$45')] }] },
+    ],
+  },
+
+  frias: {
+    heroWord:'Frías',
+    sizes:['Mediano 16oz','Grande 20oz'],
+    items:[
+      { name:'Americano', desc:'', rows:[
+        { note:'Espresso', chips:[C('Mediano','$38'),C('Grande','$45')] },
+        { note:'Espresso con Limón', chips:[C('Mediano','$42'),C('Grande','$48')] },
+      ]},
+      { name:'Latte', desc:'Café + leche + jarabe', rows:[{ note:'', chips:[C('Mediano','$65'),C('Grande','$75')] }] },
+      { name:'Chai', desc:'Especias, manzana + hielo', rows:[{ note:'', chips:[C('Mediano','$60'),C('Grande','$70')] }] },
+      { name:'Dirty Chai', desc:'Café + Especias + leche + hielo', rows:[{ note:'', chips:[C('Mediano','$77'),C('Grande','$89')] }] },
+      { name:'Matcha', desc:'Mango, frutos rojos + hielo', rows:[{ note:'', chips:[C('Mediano','$95'),C('Grande','$125')] }] },
+      { name:'Té helado', desc:'Mango, frutos rojos + hielo', rows:[{ note:'', chips:[C('Mediano','$45'),C('Grande','$55')] }] },
+      { name:'Limonada', desc:'Lavanda, frutos rojos y menta', rows:[{ note:'', chips:[C('Mediano','$50'),C('Grande','$60')] }] },
+      { name:'Frappé Chai', desc:'Base + chai + jarabe + leche + hielo', rows:[{ note:'', chips:[C('Mediano','$85'),C('Grande','$95')] }] },
+      { name:'Frappé', desc:'Base + jarabe + leche + hielo', rows:[{ note:'', chips:[C('Mediano','$65'),C('Grande','$75')] }] },
+      { name:'Frappé Matcha', desc:'Mango, frutos rojos', rows:[{ note:'', chips:[C('Mediano','$80'),C('Grande','$95')] }] },
+      { name:'Bebidas adicionales', desc:'', rows:[
+        { note:'Soda (355 ml.)', chips:[C('','$35')] },
+        { note:'Agua natural (500 ml.)', chips:[C('','$28')] },
+        { note:'Agua mineral (600 ml.)', chips:[C('','$35')] },
+      ]},
+    ],
+  },
+
+  sandwiches:[
+    { name:'Pan-Wich', price:'$35', desc:'Tapas de pan integral, mayonesa y jamón de pavo (no incluye vegetales).' },
+    { name:'Verde Vital', price:'$75', desc:'Pan base madre integral, aguacate, lechuga, espinaca, pepino, pimientos, aderezo cilantro-aguacate.' },
+    { name:'Avocado Toast', price:'$90', desc:'Pan base madre integral, huevo, aguacate, espinaca, aderezo chipotle y aderezo cilantro-aguacate.' },
+    { name:'Refrescante', price:'$100', desc:'Pan base madre integral, atún (75 gr.), pepino, limón, aguacate, pimienta, sal.' },
+    { name:'Pollo', price:'$90', desc:'Pan base madre integral, pollo (60 gr.), aguacate, lechuga, tomate, espinaca, pimientos y aderezo chipotle.' },
+  ],
+  sandExtras:[
+    { name:'Jamón Rebanada', price:'$10' },
+    { name:'Aguacate', price:'$15' },
+    { name:'Pollo', price:'$15' },
+    { name:'Huevo', price:'$10' },
+    { name:'Atún', price:'$15' },
+  ],
+
+  postres:[
+    { name:'Brownie Hershey', sub:'', price:'$70' },
+    { name:'Brownie Hershey', sub:'con nieve', price:'$90' },
+    { name:'Rol de Canela', sub:'', price:'$80' },
+    { name:'Muffin Chocolate', sub:'', price:'$60' },
+  ],
+  otros:[ { name:'Nachos c/queso', price:'$120' } ],
+};
+
+const SCREENS = {
+  calientes:{ title:'Bebidas Calientes', kind:'drinks', kicker:'Bebidas', img:'calientes', word:'Calientes' },
+  frias:    { title:'Bebidas Frías',     kind:'drinks', kicker:'Bebidas', img:'frias', word:'Frías' },
+  sandwiches:{ title:'Sandwiches',       kind:'sand',   kicker:'Alimentos', img:'sandwiches', word:'Sandwich' },
+  postres:  { title:'Postres',           kind:'post',   kicker:'Alimentos', img:'postres', word:'Postres' },
+};
+
+const CATEGORIES = [
+  { key:'calientes', name:'Bebidas Calientes', sub:'Espresso, latte, chai y más', img:'calientes', alt:'Cappuccino con arte latte' },
+  { key:'frias', name:'Bebidas Frías', sub:'Frappés, limonadas, tés helados', img:'frias', alt:'Bebida fría de matcha con hielo' },
+  { key:'sandwiches', name:'Sandwiches', sub:'Pan artesanal e ingredientes frescos', img:'sandwiches', alt:'Sandwich con vegetales frescos' },
+  { key:'postres', name:'Postres', sub:'Brownies, muffins y más', img:'postres', alt:'Postre de chocolate con crema y cereza' },
+];
+
+/* ---------- helpers ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function picture(kind, name, alt, w, h, eager){
+  // kind: 'hero' | 'card'
+  return `<picture>
+    <source type="image/webp" srcset="assets/img/${kind}-${name}.webp">
+    <img src="assets/img/${kind}-${name}.jpg" alt="${esc(alt)}" width="${w}" height="${h}"
+         ${eager ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'}>
+  </picture>`;
+}
+
+const BEANS = `
+  <span class="bean" style="left:18px;top:22px;width:34px;height:46px;transform:rotate(-24deg);opacity:.92" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 40 54"><ellipse cx="20" cy="27" rx="16" ry="25" fill="#4a3627"/><path d="M20 5 C13 18 27 36 20 49" stroke="#8a6a4f" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></span>
+  <span class="bean" style="left:50px;top:64px;width:24px;height:33px;transform:rotate(16deg);opacity:.82" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 40 54"><ellipse cx="20" cy="27" rx="16" ry="25" fill="#4a3627"/><path d="M20 5 C13 18 27 36 20 49" stroke="#8a6a4f" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></span>
+  <span class="bean" style="right:20px;top:16px;width:30px;height:41px;transform:rotate(28deg);opacity:.88" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 40 54"><ellipse cx="20" cy="27" rx="16" ry="25" fill="#4a3627"/><path d="M20 5 C13 18 27 36 20 49" stroke="#8a6a4f" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></span>
+  <span class="bean" style="right:54px;top:62px;width:21px;height:29px;transform:rotate(-14deg);opacity:.72" aria-hidden="true"><svg width="100%" height="100%" viewBox="0 0 40 54"><ellipse cx="20" cy="27" rx="16" ry="25" fill="#4a3627"/><path d="M20 5 C13 18 27 36 20 49" stroke="#8a6a4f" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></span>`;
+
+/* ---------- app bar ---------- */
+function renderBar(screen){
+  const el = document.getElementById('appbar-inner');
+  const home = !screen;
+  el.innerHTML = `
+    ${home ? '' : `<a class="back" href="#home" aria-label="Regresar al inicio">‹</a>`}
+    <span class="brand-time">09:22</span>
+    <span class="brand-name">Café</span>
+    <span class="spacer"></span>
+    ${home ? '' : `<span class="title">${esc(SCREENS[screen].title)}</span>`}
+  `;
+}
+
+/* ---------- screens ---------- */
+function homeHTML(){
+  const cards = CATEGORIES.map(c => `
+    <a class="cat-card" href="#${c.key}">
+      <span class="cat-thumb">${picture('card', c.img, c.alt, 120, 104, true)}</span>
+      <span class="cat-body">
+        <span class="cat-name">${esc(c.name)}</span>
+        <span class="cat-sub">${esc(c.sub)}</span>
+        <span class="cat-cta">Ver menú →</span>
+      </span>
+    </a>`).join('');
+  return `<div class="screen">
+    <div class="home-head">
+      <div class="home-ring" aria-hidden="true"></div>
+      ${BEANS}
+      <h1 class="home-word">menu</h1>
+      <div class="home-sub">09:22 Café</div>
+      <div class="home-rule" aria-hidden="true"></div>
+      <p class="home-lede">Elige una categoría para ver nuestro menú completo.</p>
+    </div>
+    <nav class="cat-list" aria-label="Categorías del menú">${cards}</nav>
+    <div class="pricenote">Precios en pesos · Sujetos a cambio</div>
+    <p class="foot">09:22 Café · Gracias por tu visita ☕</p>
+  </div>`;
+}
+
+function heroHTML(cfg){
+  const alt = cfg.kind==='drinks'
+    ? `Bebida ${cfg.img==='frias'?'fría':'caliente'} de 09:22 Café`
+    : (cfg.img==='sandwiches' ? 'Sandwich artesanal de 09:22 Café' : 'Postre de 09:22 Café');
+  return `<div class="hero">
+    ${picture('hero', cfg.img, alt, 460, 170, true)}
+    <div class="hero-cap">
+      <div class="hero-kicker">${esc(cfg.kicker)}</div>
+      <div class="hero-word">${esc(cfg.word || cfg.title)}</div>
+    </div>
+  </div>`;
+}
+
+function chipHTML(chip){
+  return `<div class="chip">
+    ${chip.size ? `<span class="chip-size">${esc(chip.size)}</span>` : ''}
+    <span class="chip-price">${esc(chip.price)}</span>
+  </div>`;
+}
+
+function drinksHTML(key, cfg){
+  const d = MENU[key];
+  const word = 'Tamaños';
+  const sizes = d.sizes.map(s => `<span class="size">${esc(s)}</span>`).join('');
+  const items = d.items.map(it => `
+    <div class="item">
+      <div class="item-name">${esc(it.name)}</div>
+      ${it.desc ? `<div class="item-desc">${esc(it.desc)}</div>` : ''}
+      <div class="rows">
+        ${it.rows.map(row => `
+          <div class="row">
+            ${row.note ? `<div class="row-note">${esc(row.note)}</div>` : ''}
+            <div class="chips">${row.chips.map(chipHTML).join('')}</div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+
+  const extras = MENU.extras.map(e => `
+    <div class="line"><span>${esc(e.name)}</span><span class="price">${esc(e.price)}</span></div>`).join('');
+  const pers = MENU.personaliza.map(p => `<span class="tag">${esc(p)}</span>`).join('');
+  const sf = MENU.sugarFree.map(s => `<span class="tag sf">${esc(s)}</span>`).join('');
+
+  return `<div class="screen">
+    <h1 class="sr-only">${esc(cfg.title)}</h1>
+    ${heroHTML(cfg)}
+    <div class="sizes"><span>${word}:</span>${sizes}</div>
+    <div class="items">${items}</div>
+    <div class="blocks">
+      <section class="block block-teal" aria-labelledby="ex-h">
+        <h2 id="ex-h">Extras</h2>
+        <div class="kv">${extras}</div>
+      </section>
+      <section class="block block-brown" aria-labelledby="pe-h">
+        <h2 id="pe-h" class="tight">Personaliza tu bebida</h2>
+        <div class="tags">${pers}</div>
+        <div class="subhead">Sugar Free</div>
+        <div class="tags">${sf}</div>
+      </section>
+    </div>
+  </div>`;
+}
+
+function sandHTML(cfg){
+  const cards = MENU.sandwiches.map(s => `
+    <div class="sand-card">
+      <div class="sand-head">
+        <div class="sand-name">${esc(s.name)}</div>
+        <div class="sand-price">${esc(s.price)}</div>
+      </div>
+      <div class="sand-desc">${esc(s.desc)}</div>
+    </div>`).join('');
+  const extras = MENU.sandExtras.map(e => `
+    <div class="line"><span>${esc(e.name)}</span><span class="price">${esc(e.price)}</span></div>`).join('');
+  return `<div class="screen">
+    <h1 class="sr-only">${esc(cfg.title)}</h1>
+    ${heroHTML(cfg)}
+    <div class="sand-list">${cards}</div>
+    <div class="pad">
+      <section class="block block-teal" aria-labelledby="se-h">
+        <h2 id="se-h">Extras</h2>
+        <div class="kv">${extras}</div>
+      </section>
+    </div>
+  </div>`;
+}
+
+function postHTML(cfg){
+  const rows = MENU.postres.map(p => `
+    <div class="post-row">
+      <div><span class="post-name">${esc(p.name)}</span>${p.sub ? `<span class="post-sub">${esc(p.sub)}</span>` : ''}</div>
+      <div class="post-price">${esc(p.price)}</div>
+    </div>`).join('');
+  const otros = MENU.otros.map(o => `
+    <div class="line"><span>${esc(o.name)}</span><span class="price gold">${esc(o.price)}</span></div>`).join('');
+  return `<div class="screen">
+    <h1 class="sr-only">${esc(cfg.title)}</h1>
+    ${heroHTML(cfg)}
+    <div class="post-list">${rows}</div>
+    <div class="pad">
+      <section class="block block-brown" aria-labelledby="ot-h">
+        <h2 id="ot-h">Otros</h2>
+        <div class="kv">${otros}</div>
+      </section>
+    </div>
+  </div>`;
+}
+
+/* ---------- Open Graph: make image/url absolute for the actual served URL ---------- */
+(function absolutizeOG(){
+  try {
+    const img = document.querySelector('meta[property="og:image"]');
+    if (img && !/^https?:/i.test(img.content)) img.content = new URL(img.getAttribute('content'), location.href).href;
+    const url = document.querySelector('meta[property="og:url"]');
+    if (url && !url.content) url.content = location.href.split('#')[0];
+  } catch (e) {}
+})();
+
+/* ---------- router ---------- */
+function currentScreen(){
+  const h = location.hash.replace(/^#/, '');
+  return SCREENS[h] ? h : '';   // '' or unknown hash === home
+}
+
+let navigatedInApp = false;   // becomes true once the user navigates within the app
+
+function render(fromNav){
+  const key = currentScreen();
+  renderBar(key);
+  const main = document.getElementById('screen');
+  let html, title;
+  if(!key){
+    html = homeHTML();
+    title = 'Inicio';
+    document.title = 'Menú · 09:22 Café';
+  } else {
+    const cfg = SCREENS[key];
+    if(cfg.kind === 'drinks') html = drinksHTML(key, cfg);
+    else if(cfg.kind === 'sand') html = sandHTML(cfg);
+    else html = postHTML(cfg);
+    title = cfg.title;
+    document.title = cfg.title + ' · 09:22 Café';
+  }
+  main.innerHTML = html;
+  window.scrollTo(0, 0);
+  // On real navigations (not initial load): announce the screen succinctly and move focus to it.
+  if(fromNav){
+    const status = document.getElementById('route-status');
+    if(status) status.textContent = title;
+    main.setAttribute('tabindex','-1');
+    main.focus({preventScroll:true});
+  }
+}
+
+// In-app back control: reverse history when we have an in-app entry to return to,
+// otherwise go home. href="#home" keeps it working with JS disabled.
+document.addEventListener('click', (e) => {
+  const back = e.target.closest ? e.target.closest('.back') : null;
+  if(!back) return;
+  e.preventDefault();
+  if(navigatedInApp && history.length > 1) history.back();
+  else location.hash = '';
+});
+
+window.addEventListener('hashchange', () => { navigatedInApp = true; render(true); });
+render(false);
+</script>
+</body>
+</html>
