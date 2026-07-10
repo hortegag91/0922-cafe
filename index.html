@@ -171,6 +171,16 @@
   .post-sub{font-size:12.5px;font-style:italic;color:var(--muted);margin-left:6px}
   .post-price{font-family:var(--slab);font-weight:700;font-size:18px;color:var(--teal-ink);white-space:nowrap}
 
+  /* ---------- Sample-photo gallery ---------- */
+  .gallery{padding:22px 14px 0}
+  .gallery-label{text-align:center;font-family:var(--slab);font-weight:700;font-size:11px;
+    letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  .gallery-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .gallery-item{margin:0}
+  .gallery-item img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:12px;
+    box-shadow:0 3px 10px rgba(58,52,44,0.10)}
+  .gallery-cap{margin-top:6px;text-align:center;font-size:11.5px;color:var(--muted);line-height:1.2}
+
   /* ---------- Screen transition ---------- */
   .screen{animation:fade .28s ease both}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -321,6 +331,47 @@ function renderBar(screen){
   `;
 }
 
+/* ---------- sample-photo gallery (a few example photos per section) ---------- */
+const GALLERY = {
+  calientes: [
+    { img:'gal-calientes-1', cap:'Cappuccino', alt:'Cappuccino con arte latte' },
+    { img:'gal-calientes-2', cap:'Chocolate', alt:'Chocolate caliente con espuma' },
+    { img:'gal-calientes-3', cap:'Té', alt:'Té caliente en vaso de vidrio' },
+  ],
+  frias: [
+    { img:'gal-frias-1', cap:'Latte frío', alt:'Latte frío con hielo' },
+    { img:'gal-frias-2', cap:'Limonada', alt:'Limonada de frutos rojos' },
+    { img:'gal-frias-3', cap:'Frappé', alt:'Frappé con crema batida' },
+  ],
+  sandwiches: [
+    { img:'gal-sandwiches-1', cap:'Avocado Toast', alt:'Avocado toast con huevo y espinaca' },
+    { img:'gal-sandwiches-2', cap:'Pan-Wich', alt:'Sandwich a la plancha' },
+    { img:'gal-sandwiches-3', cap:'Verde Vital', alt:'Sandwich verde con pepino' },
+  ],
+  postres: [
+    { img:'gal-postres-1', cap:'Rol de Canela', alt:'Rol de canela con glaseado' },
+    { img:'gal-postres-2', cap:'Brownie Hershey', alt:'Brownie con crema y cereza' },
+    { img:'gal-postres-3', cap:'Muffin Chocolate', alt:'Muffin de chocolate con frutos rojos' },
+  ],
+};
+
+function galleryHTML(section){
+  const items = GALLERY[section];
+  if(!items) return '';
+  return `<div class="gallery">
+    <p class="gallery-label">Fotos de muestra</p>
+    <div class="gallery-strip">
+      ${items.map(g => `<figure class="gallery-item">
+        <picture>
+          <source type="image/webp" srcset="assets/img/${g.img}.webp">
+          <img src="assets/img/${g.img}.jpg" alt="${esc(g.alt)}" width="300" height="300" loading="lazy" decoding="async">
+        </picture>
+        <figcaption class="gallery-cap">${esc(g.cap)}</figcaption>
+      </figure>`).join('')}
+    </div>
+  </div>`;
+}
+
 /* ---------- screens ---------- */
 function homeHTML(){
   const cards = CATEGORIES.map(c => `
@@ -431,6 +482,7 @@ function drinksHTML(key, cfg){
         <tbody>${rows}</tbody>
       </table>
     </div>
+    ${galleryHTML(key)}
     <div class="blocks">
       <section class="block block-teal" aria-labelledby="ex-h">
         <h2 id="ex-h">Extras</h2>
@@ -461,6 +513,7 @@ function sandHTML(cfg){
     <h1 class="sr-only">${esc(cfg.title)}</h1>
     ${heroHTML(cfg)}
     <div class="sand-list">${cards}</div>
+    ${galleryHTML('sandwiches')}
     <div class="pad">
       <section class="block block-teal" aria-labelledby="se-h">
         <h2 id="se-h">Extras</h2>
@@ -482,6 +535,7 @@ function postHTML(cfg){
     <h1 class="sr-only">${esc(cfg.title)}</h1>
     ${heroHTML(cfg)}
     <div class="post-list">${rows}</div>
+    ${galleryHTML('postres')}
     <div class="pad">
       <section class="block block-brown" aria-labelledby="ot-h">
         <h2 id="ot-h">Otros</h2>

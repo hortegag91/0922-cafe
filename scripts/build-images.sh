@@ -42,6 +42,18 @@ for name in calientes frias sandwiches postres; do
   eval "mkcard $name \$CARD_$name"
 done
 
+# Sample-photo gallery: 3 square thumbs per section (WebP + JPG). Edit the ids to swap.
+gal_keys=(calientes-1 calientes-2 calientes-3 frias-1 frias-2 frias-3 \
+          sandwiches-1 sandwiches-2 sandwiches-3 postres-1 postres-2 postres-3)
+gal_ids=(3 46 125 90 81 74 161 169 66 20 117 35)
+for i in "${!gal_keys[@]}"; do
+  k=${gal_keys[$i]}; id=${gal_ids[$i]}
+  magick "$SRC/0922-$id.jpg" -auto-orient -resize 300x300^ -gravity center -extent 300x300 \
+    -unsharp 0x0.8 -quality 82 "$OUT/gal-$k.jpg"
+  magick "$OUT/gal-$k.jpg" -quality 80 -define webp:method=6 "$OUT/gal-$k.webp"
+done
+echo "gallery: 12 square thumbs (gal-*.jpg/.webp)"
+
 # Brand logo (transparent PNG source) -> web WebP (alpha) + quantized PNG fallback,
 # plus a 180x180 apple-touch-icon on a cream background.
 if [ -f "$SRC/logo.png" ]; then
